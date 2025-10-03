@@ -1,1 +1,22 @@
+name: Run Notebook (daily)
+
+
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: |
+          python -m pip install --upgrade pip
+          pip install papermill jupyter
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - run: papermill notebook.ipynb output.ipynb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: executed-notebook
+          path: output.ipynb
 

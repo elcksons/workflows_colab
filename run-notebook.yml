@@ -1,6 +1,6 @@
 name: Run Notebook (daily)
 
-
+on:
   workflow_dispatch: {}
 
 jobs:
